@@ -1,2 +1,2 @@
 # Notes
- A Minecraft Plugin that addes the ability to create digitized Noteblock Songs
+ A Minecraft Plugin that adds the ability to create digitized Noteblock Songs
