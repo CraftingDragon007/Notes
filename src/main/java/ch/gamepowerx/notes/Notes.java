@@ -1,3 +1,21 @@
+/*
+ *       Notes is a Minecraft Plugin that adds the ability to create digitized Noteblock Songs
+ *                  Copyright (C) 2021 CraftingDragon007
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package ch.gamepowerx.notes;
 
 import ch.gamepowerx.notes.commands.*;
@@ -72,7 +90,6 @@ public final class Notes extends JavaPlugin {
         for(String songString : songConfig.getKeys(false)){
             Song song = new Song(songConfig.getString(songString+".Name"),songConfig.getString(songString+".Author"), Instrument.valueOf(songConfig.getString(songString+".Instrument")));
             for(String noteStr : songConfig.getStringList(songString+".Notes")){
-                //System.out.println(noteStr);
                 song.addNotes(Song.parseNote(noteStr));
             }
             songs.add(song);
@@ -80,10 +97,8 @@ public final class Notes extends JavaPlugin {
     }
 
     private void saveSavedSongs(){
-        //songConfig.set("Songs",songs);
         for(Song song : songs){
             songConfig.set(song.getName()+".Name",song.getName());
-            //songConfig.set(song.getName()+".Notes",Song.parseNoteArrayString(song.getNoteList()));
             List<String> noteStr = new ArrayList<>();
             for(Object o : song.getNoteList()){
                 if(o instanceof Pause){
