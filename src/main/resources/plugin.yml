@@ -1,0 +1,30 @@
+name: Notes
+version: ${project.version}
+main: ch.gamepowerx.notes.Notes
+api-version: 1.16
+authors: [ CraftingDragon007 ]
+commands:
+  playnotes:
+    description: Spielt Noten ab
+    usage: /playnotes <Noten>
+    permission: notes.play
+  playsavedsong:
+    description: Spielt einen gespeicherten Song ab
+    usage: /playsavedsong <Name> (Spieler)
+    permission: notes.play
+  savesong:
+    description: Speichert einen Song ab
+    usage: /savesong <Name> <Noten> <Ticks:true/false>
+    permission: notes.savesong
+  getsonginfo:
+    description: Zeigt Informationen über einen Song an
+    usage: /getsonginfo <Name>
+    permission: notes.getsonginfo
+  scan:
+    description: Scannt Notenblöcke und Repeater ein
+    usage: /scan <create|rename|stop> <Name> (Instrument)
+    permission: notes.scan
+  deletesong:
+    description: Löscht einen Song
+    usage: /deletesong <Name>
+    permission: notes.delete
