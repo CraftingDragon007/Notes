@@ -23,7 +23,6 @@ import ch.gamepowerx.notes.tabcompleter.SongCompleter;
 import org.bukkit.Bukkit;
 import org.bukkit.Instrument;
 import org.bukkit.Note;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -37,11 +36,12 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public final class Notes extends JavaPlugin {
 
     public static SongList songs;
-    public static HashMap<Player, Song> scans = new HashMap<>();
+    public static final HashMap<Player, Song> scans = new HashMap<>();
     public static FileConfiguration songConfig;
 
     @Override
@@ -50,17 +50,17 @@ public final class Notes extends JavaPlugin {
         songs = new SongList();
         loadSavedSongs();
         Bukkit.getPluginManager().registerEvents(new Listeners(), this);
-        getCommand("playnotes").setExecutor(new PlayNotes());
-        getCommand("playnotes").setTabCompleter(new ch.gamepowerx.notes.tabcompleter.PlayNotes());
-        getCommand("playsavedsong").setExecutor(new PlaySavedSong());
-        getCommand("playsavedsong").setTabCompleter(new ch.gamepowerx.notes.tabcompleter.PlaySavedSong());
-        getCommand("getsonginfo").setExecutor(new GetSongInfo());
-        getCommand("getsonginfo").setTabCompleter(new SongCompleter());
-        getCommand("savesong").setExecutor(new SaveSong());
-        getCommand("savesong").setTabCompleter(new ch.gamepowerx.notes.tabcompleter.PlayNotes());
-        getCommand("scan").setExecutor(new Scan());
-        getCommand("deletesong").setExecutor(new DeleteSong());
-        getCommand("deletesong").setTabCompleter(new SongCompleter());
+        Objects.requireNonNull(getCommand("playnotes")).setExecutor(new PlayNotes());
+        Objects.requireNonNull(getCommand("playnotes")).setTabCompleter(new ch.gamepowerx.notes.tabcompleter.PlayNotes());
+        Objects.requireNonNull(getCommand("playsavedsong")).setExecutor(new PlaySavedSong());
+        Objects.requireNonNull(getCommand("playsavedsong")).setTabCompleter(new ch.gamepowerx.notes.tabcompleter.PlaySavedSong());
+        Objects.requireNonNull(getCommand("getsonginfo")).setExecutor(new GetSongInfo());
+        Objects.requireNonNull(getCommand("getsonginfo")).setTabCompleter(new SongCompleter());
+        Objects.requireNonNull(getCommand("savesong")).setExecutor(new SaveSong());
+        Objects.requireNonNull(getCommand("savesong")).setTabCompleter(new ch.gamepowerx.notes.tabcompleter.PlayNotes());
+        Objects.requireNonNull(getCommand("scan")).setExecutor(new Scan());
+        Objects.requireNonNull(getCommand("deletesong")).setExecutor(new DeleteSong());
+        Objects.requireNonNull(getCommand("deletesong")).setTabCompleter(new SongCompleter());
     }
 
     @Override
@@ -70,8 +70,8 @@ public final class Notes extends JavaPlugin {
     }
 
     private void loadSavedSongs(){
-        if (!getDataFolder().exists())
-            getDataFolder().mkdir();
+        
+        getDataFolder().mkdir();
         File file = new File(getDataFolder(), "songs.yml");
         if (!file.exists()) {
             try (InputStream in = this.getResource("songs.yml")) {

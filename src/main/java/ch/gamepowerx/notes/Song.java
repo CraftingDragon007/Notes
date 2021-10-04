@@ -1,14 +1,3 @@
-package ch.gamepowerx.notes;
-
-import org.bukkit.Instrument;
-import org.bukkit.Note;
-import org.bukkit.entity.Player;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.util.ArrayList;
 /*
  *       Notes is a Minecraft Plugin that adds the ability to create digitized Noteblock Songs
  *                  Copyright (C) 2021 CraftingDragon007
@@ -27,15 +16,21 @@ import java.util.ArrayList;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package ch.gamepowerx.notes;
+
+import org.bukkit.Instrument;
+import org.bukkit.Note;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Song {
     private String name;
-    private String author;
-    private Instrument instrument;
-    private Thread thread;
+    private final String author;
+    private final Instrument instrument;
     private List<Object> noteList;
 
     public Song(String name,String author, Instrument instrument){
@@ -61,26 +56,25 @@ public class Song {
     }
 
     public void playSong(Player player) {
-        thread = new Thread(() -> {
-            for(Object o : noteList){
-                if(o instanceof Note){
+        Thread thread = new Thread(() -> {
+            for (Object o : noteList) {
+                if (o instanceof Note) {
                     Note note = (Note) o;
                     player.playNote(player.getLocation(), instrument, note);
-                }else if(o instanceof Pause){
+                } else if (o instanceof Pause) {
                     Pause pause = (Pause) o;
                     try {
-                        //System.out.println(pause.getDuration());
-                        if(!pause.isInTicks()) {
+                        if (!pause.isInTicks()) {
                             TimeUnit.SECONDS.sleep(pause.getDurationInt());
-                        }else {
+                        } else {
                             TimeUnit.MILLISECONDS.sleep(pause.getDuration() * 50);
                         }
-                    }catch (InterruptedException e){
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        },"Notes");
+        }, "Notes");
         thread.start();
     }
 
@@ -114,14 +108,11 @@ public class Song {
 
     public static Object parseNote(String strNote){
         char[] chars = strNote.toCharArray();
-        //System.out.println(chars[0]);
-        //System.out.println(chars[1]);
         Note note = null;
         Pause pause = null;
         if(chars[0]=='-'){
             final long duration = Long.parseLong(String.valueOf(chars[1]));
             if(chars.length==3){
-                //System.out.println(Long.parseLong(String.valueOf(chars[1])));
                 if(chars[2]=='T')
                     pause = new Pause(duration,true);
                 if(chars[2]=='S')
@@ -196,7 +187,7 @@ public class Song {
         for(Object o : noteList){
             if(o instanceof Note){
                 Note note = (Note) o;
-                str.append(note.getTone().toString());
+                str.append(note.getTone());
             }else if(o instanceof Pause){
                 Pause pause = (Pause) o;
                 str.append(pause.getDuration());

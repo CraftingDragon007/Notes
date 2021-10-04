@@ -1,12 +1,3 @@
-package ch.gamepowerx.notes.commands;
-
-import ch.gamepowerx.notes.Notes;
-import ch.gamepowerx.notes.Song;
-import org.bukkit.Instrument;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 /*
  *       Notes is a Minecraft Plugin that adds the ability to create digitized Noteblock Songs
  *                  Copyright (C) 2021 CraftingDragon007
@@ -25,12 +16,23 @@ import org.bukkit.entity.Player;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package ch.gamepowerx.notes.commands;
+
+import ch.gamepowerx.notes.Notes;
+import ch.gamepowerx.notes.Song;
+import org.bukkit.Instrument;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Scan implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player){
             switch (args[0]) {
                 case "create" :

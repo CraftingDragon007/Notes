@@ -25,28 +25,22 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class SaveSong implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         Song song = new Song(args[0],sender.getName(),Instrument.valueOf(args[1]));
         int count = 2;
         while(count < args.length) {
             song.addNotes(Song.parseNote(args[count]));
             count++;
         }
-        /*
-        if(args[2].equalsIgnoreCase("true")) {
-            song = new Song(args[0], sender.getName(), Instrument.PIANO, Song.parseNoteList(args[1], true));
-        }else if (args[2].equalsIgnoreCase("false")) {
-            song = new Song(args[0], sender.getName(), Instrument.PIANO, Song.parseNoteList(args[1], false));
-        }else {
-            return false
-         */
         boolean save = true;
         for(Song song1 : Notes.songs){
-            if(song1.getName().equalsIgnoreCase(song.getName())){
+            if (song1.getName().equalsIgnoreCase(song.getName())) {
                 save = false;
+                break;
             }
         }
         if(save)

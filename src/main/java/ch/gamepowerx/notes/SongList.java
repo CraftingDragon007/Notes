@@ -18,9 +18,6 @@
 
 package ch.gamepowerx.notes;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,11 +27,6 @@ public class SongList extends ArrayList<Song> {
         this.addAll(Arrays.asList(songs));
     }
 
-    public SongList(){
-
-    }
-
-    @Nullable
     public Song getSongByName(String name){
         if(containsSong(name)){
             for(Song song : this){
@@ -46,17 +38,15 @@ public class SongList extends ArrayList<Song> {
         return null;
     }
 
-    @NotNull
     public boolean containsSong(String name){
         for(Song song : this){
-            if(song.getName().equalsIgnoreCase("name")){
+            if(song.getName().equalsIgnoreCase(name)){
                 return true;
             }
         }
         return false;
     }
 
-    @NotNull
     public Collection<String> getSongNames(){
         Collection<String> songNames = new ArrayList<>();
         for(Song song : this){
