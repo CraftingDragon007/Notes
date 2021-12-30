@@ -1,7 +1,7 @@
 name: Notes
 version: ${project.version}
 main: ch.gamepowerx.notes.Notes
-api-version: 1.16
+api-version: 1.17
 authors: [ CraftingDragon007 ]
 commands:
   playnotes:
@@ -28,3 +28,15 @@ commands:
     description: Löscht einen Song
     usage: /deletesong <Name>
     permission: notes.delete
+
+permissions:
+  notes.play:
+    default: op
+  notes.savesong:
+    default: op
+  notes.getsonginfo:
+    default: op
+  notes.scan:
+    default: op
+  notes.delete:
+    default: op

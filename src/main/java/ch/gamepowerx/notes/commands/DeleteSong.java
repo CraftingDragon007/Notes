@@ -30,9 +30,10 @@ public class DeleteSong implements CommandExecutor {
         if(args.length==1){
             if(Notes.songs.containsSong(args[0])){
                 Notes.songs.remove(Notes.songs.getSongByName(args[0]));
-                sender.sendMessage("§aDer Song wurde erfolgreich §cgelöscht§a!");
+                sender.sendMessage("§aDer Song wurde erfolgreich§c gelöscht§a!");
             }else sender.sendMessage("§cDer Song konnte nicht gefunden werden!");
-        }else sender.sendMessage("§cBitte verwende: §6/deletesong <Name>");
+        }else //noinspection SpellCheckingInspection
+            sender.sendMessage("§cBitte verwende: §6/deletesong <Name>");
         return true;
     }
 }

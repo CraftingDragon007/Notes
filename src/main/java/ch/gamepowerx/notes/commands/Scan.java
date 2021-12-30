@@ -42,6 +42,10 @@ public class Scan implements CommandExecutor {
                             names.add(song.getName());
                         }
                         Song song = new Song(args[1], sender.getName(), Instrument.valueOf(args[2]));
+                        if(names.contains(song.getName())){
+                            sender.sendMessage("§cEs existiert bereits ein Song mit diesem Namen!");
+                            return true;
+                        }
                         Notes.scans.put(((Player) sender).getPlayer(), song);
                         sender.sendMessage("§aScan erstellt bitte klicke alle Notenblöcke und Repeater an und gebe dann §6/scan stop");
                         break;
@@ -58,7 +62,7 @@ public class Scan implements CommandExecutor {
                     if(args.length==2) {
                         if (Notes.scans.containsKey(((Player) sender).getPlayer())) {
                             Notes.scans.get(sender).setName(args[1]);
-                            sender.sendMessage("§aScan wurde erfolgreich umbennant!");
+                            sender.sendMessage("§aScan wurde erfolgreich umbenannt!");
                         } else {
                             sender.sendMessage("§cDu hast keinen Scan erstellt!");
                         }
@@ -67,7 +71,7 @@ public class Scan implements CommandExecutor {
                 case "cancel" :
                     if (Notes.scans.containsKey(((Player) sender).getPlayer())) {
                         Notes.scans.remove(sender);
-                        sender.sendMessage("§aScan wurde erfolgreich §cabgebrochen§a!");
+                        sender.sendMessage("§aScan wurde erfolgreich§c abgebrochen§a!");
                     } else {
                         sender.sendMessage("§cDu hast keinen Scan erstellt!");
                     }

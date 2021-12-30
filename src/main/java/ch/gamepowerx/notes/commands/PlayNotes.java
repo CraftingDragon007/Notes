@@ -29,8 +29,7 @@ import org.jetbrains.annotations.NotNull;
 public class PlayNotes implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(sender instanceof Player){
-            Player player = (Player) sender;
+        if(sender instanceof Player player){
             Song song = new Song(args[0],sender.getName(),Instrument.valueOf(args[1]));
             int count = 2;
             while(count < args.length) {

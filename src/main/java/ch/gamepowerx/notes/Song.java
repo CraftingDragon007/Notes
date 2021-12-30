@@ -58,11 +58,9 @@ public class Song {
     public void playSong(Player player) {
         Thread thread = new Thread(() -> {
             for (Object o : noteList) {
-                if (o instanceof Note) {
-                    Note note = (Note) o;
+                if (o instanceof Note note) {
                     player.playNote(player.getLocation(), instrument, note);
-                } else if (o instanceof Pause) {
-                    Pause pause = (Pause) o;
+                } else if (o instanceof Pause pause) {
                     try {
                         if (!pause.isInTicks()) {
                             TimeUnit.SECONDS.sleep(pause.getDurationInt());
@@ -146,26 +144,28 @@ public class Song {
     public static List<String> parseNoteStrings(List<Object> noteList){
         List<String> noteStr = new ArrayList<>();
         for(Object o : noteList){
-            if(o instanceof Pause){
-                Pause pause = (Pause) o;
-                String isInTicks = null;
-                if(pause.isInTicks())
-                    isInTicks = "T";
-                if(!pause.isInTicks())
-                    isInTicks = "S";
-                noteStr.add("-"+pause.getDuration()+isInTicks);
-            }else if(o instanceof Note){
-                Note note = (Note) o;
-                if(!note.isSharped())
-                    noteStr.add(String.valueOf(note.getOctave())+note.getTone());
-                if(note.isSharped())
-                    noteStr.add(String.valueOf(note.getOctave())+note.getTone()+"#");
-            }
+            parseNoteList(noteStr, o);
         }
         return noteStr;
     }
 
-@Deprecated
+    public static void parseNoteList(List<String> noteStr, Object o) {
+        if(o instanceof Pause pause){
+            String isInTicks = null;
+            if(pause.isInTicks())
+                isInTicks = "T";
+            if(!pause.isInTicks())
+                isInTicks = "S";
+            noteStr.add("-"+pause.getDuration()+isInTicks);
+        }else if(o instanceof Note note){
+            if(!note.isSharped())
+                noteStr.add(String.valueOf(note.getOctave())+note.getTone());
+            if(note.isSharped())
+                noteStr.add(String.valueOf(note.getOctave())+note.getTone()+"#");
+        }
+    }
+
+    @Deprecated
     public static List<Object> parseNoteList(String noteArray, boolean isInTicks){
         List<Object> noteList = new ArrayList<>();
         for(Character character : noteArray.toUpperCase().toCharArray()){
@@ -185,11 +185,9 @@ public class Song {
     public static String parseNoteArrayString(List<Object> noteList){
         StringBuilder str = new StringBuilder();
         for(Object o : noteList){
-            if(o instanceof Note){
-                Note note = (Note) o;
+            if(o instanceof Note note){
                 str.append(note.getTone());
-            }else if(o instanceof Pause){
-                Pause pause = (Pause) o;
+            }else if(o instanceof Pause pause){
                 str.append(pause.getDuration());
             }
         }

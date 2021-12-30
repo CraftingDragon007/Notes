@@ -22,7 +22,6 @@ import ch.gamepowerx.notes.commands.*;
 import ch.gamepowerx.notes.tabcompleter.SongCompleter;
 import org.bukkit.Bukkit;
 import org.bukkit.Instrument;
-import org.bukkit.Note;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -44,6 +43,7 @@ public final class Notes extends JavaPlugin {
     public static final HashMap<Player, Song> scans = new HashMap<>();
     public static FileConfiguration songConfig;
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -70,7 +70,8 @@ public final class Notes extends JavaPlugin {
     }
 
     private void loadSavedSongs(){
-        
+
+        //noinspection ResultOfMethodCallIgnored
         getDataFolder().mkdir();
         File file = new File(getDataFolder(), "songs.yml");
         if (!file.exists()) {
@@ -101,21 +102,7 @@ public final class Notes extends JavaPlugin {
             songConfig.set(song.getName()+".Name",song.getName());
             List<String> noteStr = new ArrayList<>();
             for(Object o : song.getNoteList()){
-                if(o instanceof Pause){
-                    Pause pause = (Pause) o;
-                    String isInTicks = null;
-                    if(pause.isInTicks())
-                        isInTicks = "T";
-                    if(!pause.isInTicks())
-                        isInTicks = "S";
-                    noteStr.add("-"+pause.getDuration()+isInTicks);
-                }else if(o instanceof Note){
-                    Note note = (Note) o;
-                    if(!note.isSharped())
-                        noteStr.add(String.valueOf(note.getOctave())+note.getTone());
-                    if(note.isSharped())
-                        noteStr.add(String.valueOf(note.getOctave())+note.getTone()+"#");
-                }
+                Song.parseNoteList(noteStr, o);
             }
             songConfig.set(song.getName()+".Notes",noteStr);
             songConfig.set(song.getName()+".Author",song.getAuthor());
